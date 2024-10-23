@@ -13,7 +13,7 @@ document.getElementById('searchButton').addEventListener('click', function() {
     });
 });
 
-// Adicionar funcionalidade de registro de música
+// Adicionar função para registro de música
 document.getElementById('registerId').addEventListener('click', addMusic);
 
 let musicList = JSON.parse(localStorage.getItem('musicList')) || [];
@@ -47,10 +47,6 @@ function renderPlaylists() {
         const playlistDiv = document.createElement('div');
         playlistDiv.className = 'playlist';
 
-        const img = document.createElement('img');
-        img.src = 'https://via.placeholder.com/150'; // Imagem de espaço reservado
-        img.alt = music.title;
-
         const playlistInfoDiv = document.createElement('div');
         playlistInfoDiv.className = 'playlist-info';
 
@@ -65,12 +61,34 @@ function renderPlaylists() {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Deletar';
         deleteButton.className = 'delete-button';
-        deleteButton.addEventListener('click', () => deleteMusic(index)); // Passa o índice da música
+        deleteButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Impede a propagação do evento
+            deleteMusic(index); // Chama a função para deletar a música
+        });
 
+        // Cria a imagem de play com link
+        const link = document.createElement('a');
+        link.href = music.musicLink; // Define o link da música
+        link.target = '_blank'; // Abre o link em uma nova aba
+        link.style.textDecoration = 'none'; // Remove sublinhado do link
+        link.style.color = 'white'; // Define a cor do texto
+        link.classList.add('play-button');
+
+        const img = document.createElement('img');
+        img.src = './play.jpg'; // Imagem de espaço reservado
+        img.alt = music.title;
+        img.style.cursor = 'pointer'; // Muda o cursor para indicar que é clicável
+
+        // Adiciona a imagem ao link
+        link.appendChild(img);
+
+        // Adiciona as informações da playlist
         playlistInfoDiv.appendChild(titleElem);
         playlistInfoDiv.appendChild(descriptionElem);
-        playlistInfoDiv.appendChild(deleteButton); // Adiciona o botão de deletar
-        playlistDiv.appendChild(img);
+        playlistInfoDiv.appendChild(deleteButton);
+        
+        // Adiciona o link (com a imagem) e as informações da playlist à div da playlist
+        playlistDiv.appendChild(link);
         playlistDiv.appendChild(playlistInfoDiv);
         playlistsContainer.appendChild(playlistDiv);
     });
@@ -80,8 +98,7 @@ function renderPlaylists() {
 function deleteMusic(index) {
     musicList.splice(index, 1); // Remove a música do array
     localStorage.setItem('musicList', JSON.stringify(musicList)); // Atualiza o localStorage
-    renderPlaylists(); // Atualiza a exibição das playlists
+    renderPlaylists(); // Atualiza a exibição das músicas
 }
 
-// Chamada inicial para renderizar as playlists existentes ao carregar a página
 renderPlaylists();

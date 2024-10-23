@@ -25,5 +25,5 @@ document.getElementById('cadastroForm').addEventListener('submit', function(even
 });
 
 document.getElementById('botaoSpotify').addEventListener('click', function() {
-    window.location.href = 'file:///C:/Users/vitoria_silva18/Desktop/sim/simparte2/index.html';
+    window.location.href = 'C:/Users/vitoria_silva18/Desktop/spotify_atualizado/spotify_atualizado/sim/simparte2/index.html';
 });
