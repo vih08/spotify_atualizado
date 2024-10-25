@@ -1,29 +1,54 @@
-document.querySelectorAll('.sidebar li').forEach(item => {
-    item.addEventListener('click', () => {
-        alert(`Você clicou em: ${item.textContent}`);
-    });
-});
-document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-    event.preventDefault(); // Não deixa enviar o cadastro sem preencher os coiso
 
-    // Obter valor do cadastro
-    const nome = document.getElementById('nome').value;
-    const usuario = document.getElementById('usuario').value;
-    const senha = document.getElementById('senha').value;
-    const foto = document.getElementById('foto').files[0];
+function cadastrarUsuario(){
+    //chamando os id em variaveis
+    let name = document.getElementById('name').value
+    let email = document.getElementById('email').value
+    let confirmEmail = document.getElementById('confirm-email').value
+    let password = document.getElementById('password').value
+    let confirmPassword = document.getElementById('confirm-password').value
 
-    // o cadastro
-    console.log('Nome:', nome);
-    console.log('Usuário:', usuario);
-    console.log('Senha:', senha);
-    console.log('Foto:', foto.name);
+    //pegando dados dos usuarios na localStorage ou criando lista vazia caso nao tenha dados armazenados
+    let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [] 
 
-    alert('Cadastro realizado com sucesso!');
+    //validando confirmar email e confirmar senha
+    if(email !== confirmEmail){
+        document.getElementById('mensagem').innerText = 'Emails estão diferentes'
+        return
+    }
+    if(password !== confirmPassword){
+        document.getElementById('mensagem').innerText = 'Senhas estão diferentes'
+        return
+    }
 
-    // apertar o botao para poder mudar a pagina q tu ta 
-    document.getElementById('botaoSpotify').disabled = false;
-});
 
-document.getElementById('botaoSpotify').addEventListener('click', function() {
-    window.location.href = 'C:/Users/vitoria_silva18/Desktop/spotify_atualizado/spotify_atualizado/sim/simparte2/index.html';
-});
+    //verificando se o email já foi usado para fazer algum cadastro
+    let usuarioExistente = usuarios.find(usuario => usuario.email === email)
+    if(usuarioExistente){
+        document.getElementById('mensagem').innerText = 'E-mail já cadastrado'
+        return
+    }
+
+    //criando um objeto usuario para colocar na lista de usuarios
+    let novoUsuario = {
+        id: Date.now(),
+        nome: name,
+        email: email,
+        senha: btoa(password), //salvando a senha com criptografia
+        playlists: []
+    }
+
+    //colocar o objeto novoUsuario no fim da lista de usuarios
+    usuarios.push(novoUsuario)
+
+    //salvar na localStorage
+    localStorage.setItem('usuarios', JSON.stringify(usuarios))
+    document.getElementById('mensagem').innerText = 'Usuario foi cadastrado'
+
+    setTimeout(() => {
+        window.location.href = 'index.html'
+    },4000)
+}
+
+function voltar(){
+    window.location.href = 'index.html'
+}
