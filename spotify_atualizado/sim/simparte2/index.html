@@ -10,37 +10,37 @@
 
 <body>
     <div class="page-content">
-
         <header>
             <h1>Good Music</h1>
-
             <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Pesquisar playlists...">
+                <input type="text" id="searchInput" placeholder="Pesquisar músicas...">
                 <button id="searchButton">Buscar</button>
             </div>
             <nav class="sidebar">
-                <a>Cadastro de música</a>
+                <h3>Cadastro de Música</h3>
                 <input type="text" id="titleInput" placeholder="Título">
                 <input type="text" id="artistInput" placeholder="Artista">
                 <input type="text" id="genderInput" placeholder="Gênero">
                 <input type="text" id="durationInput" placeholder="Duração">
-                <input type="text" id="musicInput" placeholder="Link da música">
+                <input type="file" id="musicInput" accept="audio/mp3"> <!-- Mudança aqui -->
                 <button id="registerId">Cadastrar</button>
             </nav>
         </header>
 
-       
-
         <main>
             <h2>Playlists</h2>
-            <div class="playlists-container">
-                <div class="playlist">
+            <div class="playlists-container" id="playlistsContainer"></div>
+            <audio id="musicPlayer" controls style="display:none;">
+                <source id="musicSource" src="" type="audio/mpeg">
+                Seu navegador não suporta o elemento de áudio.
+            </audio>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 Good Music</p>
+        </footer>
     </div>
-    <footer>
-        <p>&copy; 2024 Good Music</p>
-
-    </footer>
-
     <script src="script.js"></script>
 </body>
+
 </html>
